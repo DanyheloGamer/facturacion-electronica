@@ -17,6 +17,7 @@ npm-debug.log
 yarn-error.log
 composer.lock
 package-lock.json
+yarn.lock
 /auth.json
 /.fleet
 /.idea
