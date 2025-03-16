@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('cajas', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
+            $table->unsignedInteger('numero')->nullable();
+            $table->string('ubicacion')->nullable();
+            $table->decimal('saldo_actual', 18, 2)->default(0);
+            $table->unsignedTinyInteger('es_activo')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

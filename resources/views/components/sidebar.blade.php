@@ -34,19 +34,22 @@
             </div>
         </div>
         <ul class="sidebar-menu" data-widget="tree">
-            {{-- 
-            <li class=" menu-ini-p">
-                <a href="dashboard">
-                    <i class="fas fa-home fa-lg bg-menu"></i>
-                    <span class="mg-menu"> Inicio</span>
-                    <span class="pull-right-container">
-                    </span>
-                </a>
-            </li> --}}
             @forelse($menuItems as $menu)
                 @if (count($menu->subMenus) > 0)
-                    <li class="treeview">
-                        <a href="#">
+                    @php
+                        $open = '';
+                        $active = '';
+                    @endphp
+                    @foreach ($menu->subMenus as $sub)
+                        @if (Request::path() == $sub->enlace)
+                            @php
+                                $open = 'menu-open';
+                                $active = 'active';
+                            @endphp
+                        @endif
+                    @endforeach
+                    <li class="treeview {{ $open }} {{ $active }}">
+                        <a href="#" class="{{ $active }}">
                             <i class="{{ $menu->icono }} fa-lg"></i>
                             <span class="mg-menu">
                                 {{ $menu->modulo }}
@@ -57,8 +60,8 @@
                         </a>
                         <ul class="treeview-menu">
                             @foreach ($menu->subMenus as $subMenu)
-                                <li>
-                                    <a href="{{ $subMenu->enlace }}">
+                                <li class="{{ isActiveRequest($menu->enlace) ? 'active' : '' }}">
+                                    <a href="{{ $subMenu->enlace }}" class="">
                                         <i class="{{ $subMenu->icono }}"></i> {{ $subMenu->modulo }}
                                     </a>
                                 </li>

@@ -85,5 +85,6 @@
 
      $(document).on('click', ".reload-all", function() {
          $(".reload-all").hide();
-     })
+     });
+     $('.sidebar-menu').tree();
  </script>

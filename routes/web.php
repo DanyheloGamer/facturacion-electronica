@@ -18,3 +18,4 @@ Route::middleware([
 });
 
 require_once __DIR__ . "/sistema/index.php";
+require_once __DIR__ . "/configuracion/index.php";

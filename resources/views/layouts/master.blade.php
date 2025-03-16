@@ -11,8 +11,6 @@
 
     <x-master.styles></x-master.styles>
 
-    <x-master.scripts></x-master.scripts>
-
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" translate="no">
@@ -43,6 +41,8 @@
 
     <input type="hidden" class="" id="tipo_cambio" name="tipo_cambio" value="">
     <input type="hidden" class="" id="fecha" name="fecha" value="{{ date('Y-m-d') }}">
+
+    <x-master.scripts></x-master.scripts>
 
     @stack('scripts')
 </body>
