@@ -18,7 +18,13 @@ RUN apt-get update && apt-get install -y \
 # Habilita mod_rewrite de Apache (Laravel lo necesita)
 RUN a2enmod rewrite
 
-# Copia archivos del proyecto al contenedor
+# Establece DocumentRoot en public/
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+# Actualiza el archivo de configuración de Apache con la nueva raíz
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf
+
+# Copia los archivos del proyecto al contenedor
 COPY . /var/www/html
 
 # Establece el directorio de trabajo
@@ -27,14 +33,14 @@ WORKDIR /var/www/html
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Instala las dependencias de Laravel
+# Instala dependencias de Laravel en producción
 RUN composer install --no-dev --optimize-autoloader
 
-# Da permisos a Laravel
+# Da permisos correctos a las carpetas necesarias de Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expone el puerto 80
+# Exponer el puerto 80
 EXPOSE 80
 
-# Comando de arranque
+# Comando de arranque del contenedor
 CMD ["apache2-foreground"]
